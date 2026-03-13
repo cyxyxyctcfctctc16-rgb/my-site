@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoctorCare Klinikasi</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f7fb;
+color:#333;
+}
+
+.container{
+width:90%;
+margin:auto;
+}
+
+section{
+padding:80px 0;
+}
+
+nav{
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 0;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#2196f3;
+}
+
+.menu a{
+margin-left:20px;
+text-decoration:none;
+color:#333;
+font-weight:bold;
+}
+
+.hero{
+background:linear-gradient(120deg,#2196f3,#21cbf3);
+color:white;
+padding:120px 0;
+text-align:center;
+}
+
+.hero button{
+padding:15px 30px;
+border:none;
+background:white;
+color:#2196f3;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.services{
+background:white;
+}
+
+.service-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.service-card{
+background:#f8f8f8;
+padding:30px;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+}
+
+.service-card:hover{
+transform:scale(1.05);
+}
+
+.doctor-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.doctor-card{
+background:white;
+padding:30px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+cursor:pointer;
+transition:0.3s;
+}
+
+.doctor-card:hover{
+transform:scale(1.05);
+}
+
+.form-box{
+background:white;
+padding:40px;
+border-radius:10px;
+max-width:600px;
+margin:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.form-box input,
+.form-box select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+.form-box button{
+width:100%;
+padding:15px;
+background:#2196f3;
+color:white;
+border:none;
+font-size:16px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.queue-box{
+margin-top:20px;
+background:#e3f2fd;
+padding:20px;
+border-radius:10px;
+text-align:center;
+font-size:20px;
+display:none;
+}
+
+.contact-box{
+display:flex;
+gap:40px;
+}
+
+.contact-map{
+width:60%;
+height:300px;
+background:#ddd;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+}
+
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:30px;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.modal-content{
+background:linear-gradient(145deg,#ffffff,#e6f0ff);
+padding:40px;
+border-radius:15px;
+max-width:500px;
+width:100%;
+text-align:center;
+position:relative;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+animation:popup 0.3s;
+}
+
+.close{
+position:absolute;
+right:15px;
+top:10px;
+font-size:22px;
+cursor:pointer;
+}
+
+@keyframes popup{
+from{
+transform:scale(0.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.service-grid{
+grid-template-columns:1fr;
+}
+
+.doctor-grid{
+grid-template-columns:1fr;
+}
+
+.contact-box{
+flex-direction:column;
+}
+
+.contact-map{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="container navbar">
+
+<div class="logo">DoctorCare</div>
+
+<div class="menu">
+<a href="#home">Home</a>
+<a href="#services">Services</a>
+<a href="#doctors">Doctors</a>
+<a href="#appointment">Appointment</a>
+<a href="#contact">Contact</a>
+</div>
+
+</div>
+</nav>
+
+<section class="hero" id="home">
+<div class="container">
+<h1>Professional Medical Care</h1>
+<p>Bizning klinikada professional shifokorlar xizmat ko‘rsatadi.</p>
+<button onclick="scrollAppointment()">Qabulga yozilish</button>
+</div>
+</section>
+
+<section class="services" id="services">
+<div class="container">
+<h2>Xizmatlar</h2>
+
+<div class="service-grid">
+
+<div class="service-card" onclick="openModal('kardio')">
+<h3>Kardiologiya</h3>
+<p>Yurak kasalliklari diagnostikasi.</p>
+</div>
+
+<div class="service-card" onclick="openModal('stoma')">
+<h3>Stomatologiya</h3>
+<p>Tish va og‘iz kasalliklari.</p>
+</div>
+
+<div class="service-card" onclick="openModal('pedia')">
+<h3>Pediatriya</h3>
+<p>Bola shifokori xizmati.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="doctors">
+<div class="container">
+<h2>Shifokor yo‘nalishlari</h2>
+
+<div class="doctor-grid">
+
+<div class="doctor-card" onclick="openModal('kardio')">
+<h3>Kardiolog</h3>
+<p>Yurak mutaxassisi</p>
+</div>
+
+<div class="doctor-card" onclick="openModal('stoma')">
+<h3>Stomatolog</h3>
+<p>Tish mutaxassisi</p>
+</div>
+
+<div class="doctor-card" onclick="openModal('pedia')">
+<h3>Pediatr</h3>
+<p>Bola shifokori</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="appointment">
+<div class="container">
+
+<h2>Qabulga yozilish</h2>
+
+<div class="form-box">
+
+<input id="name" placeholder="Ismingiz">
+<input id="surname" placeholder="Familyangiz">
+<input id="phone" placeholder="+998 *********">
+
+<select id="doctor">
+<option>Kardiolog</option>
+<option>Stomatolog</option>
+<option>Pediatr</option>
+</select>
+
+<button onclick="sendForm()">Navbat olish</button>
+
+<div class="queue-box" id="queue"></div>
+
+</div>
+
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+
+<h2>Contact</h2>
+
+<div class="contact-box">
+
+<div>
+<p>📍 Namangan</p>
+<p>📞 +998 *********</p>
+<p>📧 clinicnamangan@gmail.com</p>
+</div>
+
+<div class="contact-map">
+Namangan Klinikasi
+</div>
+
+</div>
+</div>
+</section>
+
+<footer>
+© 2026 DoctorCare Klinikasi
+</footer>
+
+<div id="modal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">✖</span>
+<h2 id="modalTitle"></h2>
+<p id="modalText"></p>
+</div>
+</div>
+
+<script>
+
+let queueNumber = 1;
+
+function scrollAppointment(){
+document.getElementById("appointment").scrollIntoView({behavior:"smooth"});
+}
+
+function sendForm(){
+
+let name=document.getElementById("name").value;
+let surname=document.getElementById("surname").value;
+let doctor=document.getElementById("doctor").value;
+
+if(name=="" || surname==""){
+alert("Iltimos ism va familyani kiriting");
+return;
+}
+
+let queueBox=document.getElementById("queue");
+
+queueBox.style.display="block";
+
+queueBox.innerHTML=
+"✔ "+name+" "+surname+
+"<br>"+doctor+
+"<br><br> Sizning navbatingiz: <b>"+queueNumber+"</b>";
+
+queueNumber++;
+
+}
+
+function openModal(type){
+
+let modal=document.getElementById("modal");
+let title=document.getElementById("modalTitle");
+let text=document.getElementById("modalText");
+
+modal.style.display="flex";
+
+if(type=="kardio"){
+title.innerHTML="Kardiologiya";
+text.innerHTML="Yurak va qon tomir kasalliklarini tekshiradi va davolaydi.";
+}
+
+if(type=="stoma"){
+title.innerHTML="Stomatologiya";
+text.innerHTML="Tish og‘rig‘i, kariyes va og‘iz kasalliklarini davolaydi.";
+}
+
+if(type=="pedia"){
+title.innerHTML="Pediatriya";
+text.innerHTML="Bolalar kasalliklari va sog‘lig‘i bilan shug‘ullanadi.";
+}
+
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* ESC yopadi */
+
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape"){
+closeModal();
+}
+
+if(e.key==="Enter"){
+sendForm();
+}
+});
+
+/* tashqarini bosib yopish */
+
+window.onclick=function(e){
+let modal=document.getElementById("modal");
+if(e.target==modal){
+modal.style.display="none";
+}
+}
+
+</script>
+
+</body>
+</html>
+```
